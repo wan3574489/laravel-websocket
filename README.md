@@ -5,7 +5,7 @@
 ## 使用
 1.安装laravel.
 
-2.composer install laravel-websocket
+2.composer require lactone/laravel-websocket
 
 3.添加laravel command类，继承 webSocket\Commands\WebSocketCommand.
 
