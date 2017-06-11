@@ -1,0 +1,21 @@
+{
+    "name": "laravel/webSocket",
+    "description": "基于laravel+swoole的webSocket工具",
+    "keywords": ["webSocket","swoole", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "W+",
+            "email": "907515459@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "5.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "websocket\\": "src/"
+        }
+    }
+}
