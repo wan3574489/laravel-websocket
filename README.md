@@ -4,7 +4,9 @@
 
 ## 使用
 1.安装laravel.
+
 2.composer install laravel-websocket
+
 3.添加laravel command类，继承 webSocket\Commands\WebSocketCommand.
 
 ## Demo安装
