@@ -1,5 +1,5 @@
 {
-    "name": "lactone/laravel-websocket",
+    "name": "laravel/webSocket",
     "description": "基于laravel+swoole的webSocket工具",
     "keywords": ["webSocket","swoole", "laravel"],
     "license": "MIT",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "websocket\\": "src/"
+            "webSocket\\": "src/"
         }
     }
 }
