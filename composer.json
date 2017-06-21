@@ -1,6 +1,6 @@
 {
     "name": "laravel/webSocket",
-    "description": "基于laravel+swoole的webSocket工具",
+    "description": "基于laravel+swoole的webSocket开发库",
     "keywords": ["webSocket","swoole", "laravel"],
     "license": "MIT",
     "authors": [
