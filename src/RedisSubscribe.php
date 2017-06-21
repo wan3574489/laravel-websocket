@@ -13,16 +13,21 @@ abstract class RedisSubscribe
 {
    protected $data;
 
+   protected $fd;
+
    protected $channel;
 
-   function setData($data)
+   function setData($channel,$data)
    {
-     $this->data = $data;
+       $this->channel = $channel;
+       $this->fd = $data['fd'];
+       $this->data = $data['data'];
    }
    
    function reset(){
-      $this->data = '';
-      $this->channel = '';
+      $this->fd = null;
+      $this->data = null;
+      $this->channel = null;
    }
    
    abstract function handle();

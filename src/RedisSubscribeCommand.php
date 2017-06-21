@@ -31,6 +31,8 @@ abstract class RedisSubscribeCommand extends Command
      */
     public function __construct()
     {
+        ini_set('default_socket_timeout', -1);
+
         parent::__construct();
 
         if(!$this->channel){
@@ -59,7 +61,7 @@ abstract class RedisSubscribeCommand extends Command
             $data    = $value[1];
 
             $instance->reset();
-            $instance->setData($channel,$data);
+            $instance->setData($channel,json_decode($data,true));
             $instance->handle();
         }
     }

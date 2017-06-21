@@ -2,8 +2,9 @@
 
 namespace webSocket\Commands;
 
-use webSocket\ServerHandle;
 use webSocket\WebSocket;
+use webSocket\ServerHandle;
+use webSocket\Contracts\Queue;
 use Illuminate\Console\Command;
 
 abstract class WebSocketCommand extends Command
@@ -39,6 +40,8 @@ abstract class WebSocketCommand extends Command
      */
     public function handle()
     {
+        ini_set('default_socket_timeout', -1);
+
         $webSocketConfig =  app('config')->get($this->getConfig());
         if(!$webSocketConfig){
             throw new \Exception("请设置webSocket配置!");
@@ -52,12 +55,12 @@ abstract class WebSocketCommand extends Command
 
         $webSocket->handle();
     }
-    
+
     protected function getConfig(){
         return 'websocket';
     }
 
     protected function getBindClass(){
-        return false;
+        throw new \Exception("请设置 Handle class 名称！");
     }
 }

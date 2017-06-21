@@ -7,10 +7,11 @@ use Illuminate\Container\Container;
 class WebSocket  extends Container
 {
 
-    protected $fds = [];
-
     private $server;
 
+    /**
+     * @var ServerHandle
+     */
     private $handler;
 
     private $app;
@@ -36,6 +37,7 @@ class WebSocket  extends Container
     }
 
     function handle(){
+
         $this->handler = $this->make(ServerHandle::class);
 
         $this->server->start();
@@ -61,10 +63,15 @@ class WebSocket  extends Container
      * @param $request
      */
     public function onOpen( $server , $request){
-        $this->fds[$request->fd] = 1;
+
+        $this->handler->openBefore($request->fd);
+
         if($pushMsg = $this->handler->open($request->fd)){
             $this->push( $request->fd ,null, $pushMsg );
         }
+
+        $this->handler->openAfter($request->fd);
+
     }
 
     /**
@@ -115,7 +122,14 @@ class WebSocket  extends Container
      * @return mixed
      */
     public function onClose($server , $fd){
-        return $this->handler->close($fd);
+
+        $this->handler->closeBefore($fd);
+
+        $ret =  $this->handler->close($fd);
+
+        $this->handler->closeAfter($fd);
+
+        return $ret;
     }
 
     /**
@@ -135,9 +149,32 @@ class WebSocket  extends Container
 
         if($isLiveClient){
             try{
-                $this->server->push( $fd , json_encode($data) );
+                $this->server->push( $fd , is_array($data)?json_encode($data):$data );
             }catch (\ErrorException $e){
                 Log::warning($fd." push data error!");
+            }
+        }
+    }
+
+    /**
+     * 为所有用户发布发送消息
+     * @param $data
+     */
+    public function pushAll($data){
+        foreach($this->server->connections as $i){
+            $this->server->push( $i , is_array($data)?json_encode($data):$data  );
+        }
+    }
+
+    /**
+     * 为所有用户push信息，除开fd
+     * @param $fd
+     * @param $data
+     */
+    public function pushToAllOutMe($fd,$data){
+        foreach($this->server->connections as $i){
+            if($i != $fd){
+                $this->server->push( $i , is_array($data)?json_encode($data):$data );
             }
         }
     }
