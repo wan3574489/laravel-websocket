@@ -20,8 +20,9 @@
 
 1. 将Demo目录中的文件覆盖到laravel程序中。
 2. 配置redis。
-3. 打开app/config/websocket.php 文件，修改websocket的监听ip、端口和工作进程数量。
-4. 命令行执行:**php artisan Chat:Start** 开启websocket服务。
+3. 打开app/config/app.php,将默认的Redis服务提供器修改为websocket的Redis服务提供器，将Illuminate\Redis\RedisServiceProvider替换为\webSocket\Redis\RedisServiceProvider
+4. 打开app/config/websocket.php 文件，修改websocket的监听ip、端口和工作进程数量。
+5. 命令行执行:**php artisan Chat:Start** 开启websocket服务。
 
 ### 文件说明
 
