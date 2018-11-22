@@ -22,7 +22,7 @@ class RedisServiceProvider extends \Illuminate\Redis\RedisServiceProvider
         $this->app->singleton('redis', function ($app) {
             $config = $app->make('config')->get('database.redis');
 
-            return new RedisManagerCli(Arr::pull($config, 'client', 'predis'), $config);
+			return new RedisManagerCli($app,Arr::pull($config, 'client', 'predis'), $config);
         });
 
         $this->app->bind('redis.connection', function ($app) {
